@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MingleDingle8")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+17405d4788436626916deb5a9aa65f6a79917d49")]
 [assembly: System.Reflection.AssemblyProductAttribute("MingleDingle8")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MingleDingle8")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

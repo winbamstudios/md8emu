@@ -30,6 +30,15 @@ namespace MingleDingle8
         {
             Console.WriteLine("MD8 Emulator Jan 2026 Release (Revision A)");
             Console.WriteLine("© 2026 winbamstudios");
+            try
+            {
+                Memory.Rom = File.ReadAllBytes(args[0]);
+            }
+            catch
+            {
+                Console.WriteLine("No file input or file does not exist.");
+                Environment.Exit(1);
+            }
             for (Memory.ProgramCounter = 0; Memory.ProgramCounter < Memory.Rom.Length; Memory.ProgramCounter += 4) 
             {
                 Cpu.Exec(Memory.Rom[Memory.ProgramCounter], Memory.Rom[Memory.ProgramCounter + 1], Memory.Rom[Memory.ProgramCounter + 2], Memory.Rom[Memory.ProgramCounter + 3]);
@@ -42,9 +51,10 @@ namespace MingleDingle8
     {
         public static byte[] Ram = new byte[256]; // 256byte ram
         public static byte[] Stack = new byte[256]; // 256byte stack
+        public static byte[] Rom;
         //public static byte[] Rom = {0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0};
         //public static byte[] Rom = {6,9,251,0,6,10,252,0,1,251,252,253,6,79,252,0,6,77,251,0,7,254,0,0,7,252,0,0,8,253,0,0,4,253,94,0,5,94,254,0,8,254,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; // 256byte rom
-        public static byte[] Rom = {6, 9, 251, 0, 6, 10, 252, 0, 1, 251, 252, 253, 6, 79, 252, 0, 2, 252, 251, 254, 7, 254, 0, 0, 7, 252, 0, 0, 8, 253, 0, 0, 4, 253, 94, 0, 5, 94, 254, 0, 8, 254, 0, 0, 9, 0, 0, 0};
+        //public static byte[] Rom = {6, 9, 251, 0, 6, 10, 252, 0, 1, 251, 252, 253, 6, 79, 252, 0, 2, 252, 251, 254, 7, 254, 0, 0, 7, 252, 0, 0, 8, 253, 0, 0, 4, 253, 94, 0, 5, 94, 254, 0, 8, 254, 0, 0, 9, 0, 0, 0};
         public static byte RegisterA; // A/251
         public static byte RegisterB; // B/252
         public static byte RegisterC; // C/253
@@ -620,12 +630,15 @@ namespace MingleDingle8
         {
             if (Memory.ZeroFlag)
             {
-                if ((int)Memory.Rom[i] == 10)
+                for (int i = 0; i < Memory.Rom.Length; i += 4) 
                 {
-                    if ((int)Memory.Rom[i + 1] == input1)
+                    if ((int)Memory.Rom[i] == 10)
                     {
-                        Memory.ProgramCounter = i;
-                        return 0;
+                        if ((int)Memory.Rom[i + 1] == input1)
+                        {
+                            Memory.ProgramCounter = i;
+                            return 0;
+                        }
                     }
                 }
             }
@@ -635,12 +648,15 @@ namespace MingleDingle8
         {
             if (!Memory.ZeroFlag)
             {
-                if ((int)Memory.Rom[i] == 10)
+                for (int i = 0; i < Memory.Rom.Length; i += 4) 
                 {
-                    if ((int)Memory.Rom[i + 1] == input1)
+                    if ((int)Memory.Rom[i] == 10)
                     {
-                        Memory.ProgramCounter = i;
-                        return 0;
+                        if ((int)Memory.Rom[i + 1] == input1)
+                        {
+                            Memory.ProgramCounter = i;
+                            return 0;
+                        }
                     }
                 }
             }

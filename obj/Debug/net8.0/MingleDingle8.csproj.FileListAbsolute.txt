@@ -12,3 +12,4 @@
 /home/will/MingleDingle16/obj/Debug/net8.0/MingleDingle8.pdb
 /home/will/MingleDingle16/obj/Debug/net8.0/MingleDingle8.genruntimeconfig.cache
 /home/will/MingleDingle16/obj/Debug/net8.0/ref/MingleDingle8.dll
+/home/will/MingleDingle16/obj/Debug/net8.0/MingleDingle8.sourcelink.json
