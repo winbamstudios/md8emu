@@ -14,8 +14,10 @@ ID, Name, Description
 9 HLT (halts)
 10 Not Implemented
 11 JMP ADDR (jumps to address) (optional)
-12 JZ ADDR (jumps to address if Register D zero)
-13 JNZ ADDR (jumps to address if Register D nonzero)
+12 JZ ADDR (jumps to address if zeroflag is zero)
+13 JNZ ADDR (jumps to address if zeroflag is nonzero)
+14 MBA R1,ADDR (moves register to address expansion bus a)
+15 MBB R1,ADDR (moves register to address expansion bus b)
 
 instructions are 4 bytes each
 */
@@ -32,18 +34,19 @@ namespace MingleDingle8
             Console.WriteLine("© 2026 winbamstudios");
             try
             {
-                Memory.Rom = File.ReadAllBytes(args[0]);
+                Memory.Rom = File.ReadAllBytes(args[0]); // reads the bytes from the rom file and stuff
             }
             catch
             {
-                Console.WriteLine("No file input or file does not exist.");
+                Console.WriteLine("No file input or file does not exist."); // do i really need to explain this
                 Environment.Exit(1);
             }
             for (Memory.ProgramCounter = 0; Memory.ProgramCounter < Memory.Rom.Length; Memory.ProgramCounter += 4) 
             {
+                // executes instruction 1
                 Cpu.Exec(Memory.Rom[Memory.ProgramCounter], Memory.Rom[Memory.ProgramCounter + 1], Memory.Rom[Memory.ProgramCounter + 2], Memory.Rom[Memory.ProgramCounter + 3]);
+                // prints cycle number
                 Console.WriteLine(Memory.ProgramCounter/4);
-                //Console.WriteLine(Memory.Ram[94]);
             }
         }
     }
@@ -51,10 +54,9 @@ namespace MingleDingle8
     {
         public static byte[] Ram = new byte[256]; // 256byte ram
         public static byte[] Stack = new byte[256]; // 256byte stack
-        public static byte[] Rom;
-        //public static byte[] Rom = {0,0,0,0,0,0,0,0,0,0,0,0,11,0,0,0};
-        //public static byte[] Rom = {6,9,251,0,6,10,252,0,1,251,252,253,6,79,252,0,6,77,251,0,7,254,0,0,7,252,0,0,8,253,0,0,4,253,94,0,5,94,254,0,8,254,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; // 256byte rom
-        //public static byte[] Rom = {6, 9, 251, 0, 6, 10, 252, 0, 1, 251, 252, 253, 6, 79, 252, 0, 2, 252, 251, 254, 7, 254, 0, 0, 7, 252, 0, 0, 8, 253, 0, 0, 4, 253, 94, 0, 5, 94, 254, 0, 8, 254, 0, 0, 9, 0, 0, 0};
+        public static byte[] BusA = new byte[256]; // expanision bus a
+        public static byte[] BusB = new byte[256]; // expansion bus b
+        public static byte[] Rom; // 1kb program rom
         public static byte RegisterA; // A/251
         public static byte RegisterB; // B/252
         public static byte RegisterC; // C/253
@@ -63,6 +65,7 @@ namespace MingleDingle8
         public static Int32 ProgramCounter; // PC
         public static bool ZeroFlag = true; // Z
     }
+    // cpu is entirely uncommented have fun hehe :3
     public static class Cpu
     {
         public static void Exec(byte opcode, byte input1, byte input2, byte input3)
@@ -145,8 +148,7 @@ namespace MingleDingle8
             }
             else if ((Int32)opcode == 10)
             {
-                Console.WriteLine("LBL not implemented, please use JMP");
-                Hlt();
+                // do nothing because labels don't work like that
             }
             else if ((Int32)opcode == 11)
             {
@@ -167,6 +169,22 @@ namespace MingleDingle8
             else if ((Int32)opcode == 13)
             {
                 Int32 status = Jnz(input1);
+                if (status == 1)
+                {
+                    Hlt();
+                }
+            }
+            else if ((Int32)opcode == 14)
+            {
+                Int32 status = MovReg2Eba(input1, input2);
+                if (status == 1)
+                {
+                    Hlt();
+                }
+            }
+            else if ((Int32)opcode == 15)
+            {
+                Int32 status = MovReg2Ebb(input1, input2);
                 if (status == 1)
                 {
                     Hlt();
@@ -659,6 +677,62 @@ namespace MingleDingle8
                         }
                     }
                 }
+            }
+            return 0;
+        }
+        static Int32 MovReg2Eba(byte input1, byte rampos)
+        {
+            if ((Int32)input1 == 251)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.BusA[ramposbutinInt32thistime] = Memory.RegisterA;
+                return 0;
+            }
+            else if ((Int32)input1 == 252)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.BusA[ramposbutinInt32thistime] = Memory.RegisterB;
+                return 0;
+            }
+            else if ((Int32)input1 == 253)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.BusA[ramposbutinInt32thistime] = Memory.RegisterC;
+                return 0;
+            }
+            else if ((Int32)input1 == 254)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.BusA[ramposbutinInt32thistime] = Memory.RegisterD;
+                return 0;
+            }
+            return 0;
+        }
+        static Int32 MovReg2Ebb(byte input1, byte rampos)
+        {
+            if ((Int32)input1 == 251)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.BusB[ramposbutinInt32thistime] = Memory.RegisterA;
+                return 0;
+            }
+            else if ((Int32)input1 == 252)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.BusB[ramposbutinInt32thistime] = Memory.RegisterB;
+                return 0;
+            }
+            else if ((Int32)input1 == 253)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.BusB[ramposbutinInt32thistime] = Memory.RegisterC;
+                return 0;
+            }
+            else if ((Int32)input1 == 254)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.BusB[ramposbutinInt32thistime] = Memory.RegisterD;
+                return 0;
             }
             return 0;
         }
