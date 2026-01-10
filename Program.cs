@@ -602,7 +602,18 @@ namespace MingleDingle8
         }
         static int Jmp(byte input1)
         {
-            Memory.ProgramCounter = (int)input1;
+            //Memory.ProgramCounter = (int)input1;
+            for (int i = 0; i < Memory.Rom.Length; i += 4) 
+            {
+                if ((int)Memory.Rom[i] == 10)
+                {
+                    if ((int)Memory.Rom[i + 1] == input1)
+                    {
+                        Memory.ProgramCounter = i;
+                        return 0;
+                    }
+                }
+            }
             return 0;
         }
         static int Jz(byte input1)
