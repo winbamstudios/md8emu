@@ -14,9 +14,9 @@ Here is the instruction set:
 - 7 PUSH R1 (pushes content of register into "stack")
 - 8 POP R1 (pulls top of stack into register)
 - 9 HLT (halts)
-- 10 Not Implemented
-- 11 JMP ADDR (jumps to address) (optional)
-- 12 JZ ADDR (jumps to address if Register D zero)
-- 13 JNZ ADDR (jumps to address if Register D nonzero)
+- 10 LBL INT (label, labelled with integer)
+- 11 JMP ADDR (jumps to lbl) (optional)
+- 12 JZ ADDR (jumps to lbl if zeroflag is zero)
+- 13 JNZ ADDR (jumps to lbl if zeroflag is nonzero)
 
 made in about 2 hours because i was bored
