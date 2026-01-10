@@ -1,0 +1,14 @@
+/home/will/MingleDingle16/bin/Debug/net8.0/MingleDingle8
+/home/will/MingleDingle16/bin/Debug/net8.0/MingleDingle8.deps.json
+/home/will/MingleDingle16/bin/Debug/net8.0/MingleDingle8.runtimeconfig.json
+/home/will/MingleDingle16/bin/Debug/net8.0/MingleDingle8.dll
+/home/will/MingleDingle16/bin/Debug/net8.0/MingleDingle8.pdb
+/home/will/MingleDingle16/obj/Debug/net8.0/MingleDingle8.GeneratedMSBuildEditorConfig.editorconfig
+/home/will/MingleDingle16/obj/Debug/net8.0/MingleDingle8.AssemblyInfoInputs.cache
+/home/will/MingleDingle16/obj/Debug/net8.0/MingleDingle8.AssemblyInfo.cs
+/home/will/MingleDingle16/obj/Debug/net8.0/MingleDingle8.csproj.CoreCompileInputs.cache
+/home/will/MingleDingle16/obj/Debug/net8.0/MingleDingle8.dll
+/home/will/MingleDingle16/obj/Debug/net8.0/refint/MingleDingle8.dll
+/home/will/MingleDingle16/obj/Debug/net8.0/MingleDingle8.pdb
+/home/will/MingleDingle16/obj/Debug/net8.0/MingleDingle8.genruntimeconfig.cache
+/home/will/MingleDingle16/obj/Debug/net8.0/ref/MingleDingle8.dll

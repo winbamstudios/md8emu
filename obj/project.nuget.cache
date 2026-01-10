@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "37GUblIWKnoADkQosKTFOFs33gOe7Zk9GfX29Cri6NHxCGe/WxJMfHclGcyYKC0mUGgQ425znPK7UAk2SBp8AA==",
+  "success": true,
+  "projectFilePath": "/home/will/MingleDingle16/MingleDingle8.csproj",
+  "expectedPackageFiles": [
+    "/home/will/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.22/microsoft.aspnetcore.app.ref.8.0.22.nupkg.sha512"
+  ],
+  "logs": []
+}

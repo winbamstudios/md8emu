@@ -1,0 +1,33 @@
+ID, Name, Description
+0 NOP (no operation)
+1 ADD R1,R2,R3 (add two registers together to output register)
+2 SUB R1,R2,R3 (subtract two registers to output register)
+3 MOV R1,R2 (copy content of register to another register)
+4 MOV R1,RAM (copy content of register to poInt32 in memory)
+5 MOV RAM,R1 (load content of byte specified into register)
+6 MOV INT,R1 (move integer into register)
+7 PUSH R1 (pushes content of register into "stack")
+8 POP R1 (pulls top of stack into register)
+9 HLT (halts)
+10 LBL NAME (function) (optional)
+11 JMP NAME (jumps to function) (optional)
+
+instructions are 4 bytes each
+
+MOV 9,A
+MOV 10,B
+ADD A,B,C
+MOV 79,B
+SUB B,A,D
+PUSH D
+PUSH B
+POP C
+MOV C,94
+MOV 94,D
+POP D
+HLT
+
+6, 9, 251, 0, 6, 10, 252, 0, 1, 251, 252, 253, 6, 79, 252, 0, 2, 252, 251, 254, 7, 254, 0, 0, 7, 252, 0, 0, 8, 253, 0, 0, 4, 253, 94, 0, 5, 94, 254, 0, 8, 254, 0, 0, 9, 0, 0, 0
+
+public static byte[] Rom = {6,9,251,0,6,10,252,0,1,251,252,253,6,79,252,0,6,77,251,0,7,254,0,0,7,252,0,0,8,253,0,0,4,253,94,0,5,94,254,0,8,254,0,0,9,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; // 256byte rom
+public static byte[] Rom = {0,0,0,0,11,0,0,0};
