@@ -620,7 +620,14 @@ namespace MingleDingle8
         {
             if (Memory.ZeroFlag)
             {
-                Memory.ProgramCounter = (int)input1;
+                if ((int)Memory.Rom[i] == 10)
+                {
+                    if ((int)Memory.Rom[i + 1] == input1)
+                    {
+                        Memory.ProgramCounter = i;
+                        return 0;
+                    }
+                }
             }
             return 0;
         }
@@ -628,7 +635,14 @@ namespace MingleDingle8
         {
             if (!Memory.ZeroFlag)
             {
-                Memory.ProgramCounter = (int)input1;
+                if ((int)Memory.Rom[i] == 10)
+                {
+                    if ((int)Memory.Rom[i + 1] == input1)
+                    {
+                        Memory.ProgramCounter = i;
+                        return 0;
+                    }
+                }
             }
             return 0;
         }
