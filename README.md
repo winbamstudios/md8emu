@@ -14,9 +14,11 @@ Here is the instruction set:
 - 7 PUSH R1 (pushes content of register into "stack")
 - 8 POP R1 (pulls top of stack into register)
 - 9 HLT (halts)
-- 10 LBL INT (label, labelled with integer)
-- 11 JMP ADDR (jumps to lbl) (optional)
-- 12 JZ ADDR (jumps to lbl if zeroflag is zero)
-- 13 JNZ ADDR (jumps to lbl if zeroflag is nonzero)
+- 10 LBL ID (function)
+- 11 JMP ID (jumps to lbl)
+- 12 JZ ID (jumps to lbl if zeroflag is zero)
+- 13 JNZ ID (jumps to lbl if zeroflag is nonzero)
+- 14 MBA R1,ADDR (moves register to address expansion bus a)
+- 15 MBB R1,ADDR (moves register to address expansion bus b)
 
 made in about 2 hours because i was bored

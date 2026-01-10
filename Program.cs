@@ -12,10 +12,10 @@ ID, Name, Description
 7 PUSH R1 (pushes content of register into "stack")
 8 POP R1 (pulls top of stack into register)
 9 HLT (halts)
-10 Not Implemented
-11 JMP ADDR (jumps to address) (optional)
-12 JZ ADDR (jumps to address if zeroflag is zero)
-13 JNZ ADDR (jumps to address if zeroflag is nonzero)
+10 LBL ID (function)
+11 JMP ID (jumps to lbl)
+12 JZ ID (jumps to lbl if zeroflag is zero)
+13 JNZ ID (jumps to lbl if zeroflag is nonzero)
 14 MBA R1,ADDR (moves register to address expansion bus a)
 15 MBB R1,ADDR (moves register to address expansion bus b)
 
@@ -45,6 +45,17 @@ namespace MingleDingle8
             {
                 // executes instruction 1
                 Cpu.Exec(Memory.Rom[Memory.ProgramCounter], Memory.Rom[Memory.ProgramCounter + 1], Memory.Rom[Memory.ProgramCounter + 2], Memory.Rom[Memory.ProgramCounter + 3]);
+                // prints serial console
+                if (Memory.SerialBus == 1)
+                {
+                    Console.Clear();
+                    Console.WriteLine(System.Text.Encoding.Default.GetString(Memory.BusA));
+                }
+                else if (Memory.SerialBus == 2)
+                {
+                    Console.Clear();
+                    Console.WriteLine(System.Text.Encoding.Default.GetString(Memory.BusB));
+                }
                 // prints cycle number
                 Console.WriteLine(Memory.ProgramCounter/4);
             }
@@ -64,6 +75,7 @@ namespace MingleDingle8
         public static byte StackPointer; // SP
         public static Int32 ProgramCounter; // PC
         public static bool ZeroFlag = true; // Z
+        public static byte SerialBus = 1; // 0 is disabled, 1 is Bus A, 2 is Bus B
     }
     // cpu is entirely uncommented have fun hehe :3
     public static class Cpu
