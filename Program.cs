@@ -28,7 +28,7 @@ namespace MingleDingle8
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("MD8 Emulator Jan 2025 Release");
+            Console.WriteLine("MD8 Emulator Jan 2026 Release (Revision A)");
             Console.WriteLine("© 2026 winbamstudios");
             for (Memory.ProgramCounter = 0; Memory.ProgramCounter < Memory.Rom.Length; Memory.ProgramCounter += 4) 
             {
@@ -51,6 +51,7 @@ namespace MingleDingle8
         public static byte RegisterD; // D/254
         public static byte StackPointer; // SP
         public static Int32 ProgramCounter; // PC
+        public static bool ZeroFlag = true; // Z
     }
     public static class Cpu
     {
@@ -218,24 +219,56 @@ namespace MingleDingle8
             if ((Int32)input3 == 251)
             {
                 Int32 math = (Int32)value1 + (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
                 Memory.RegisterA = Convert.ToByte(math);
                 return 0;
             }
             else if ((Int32)input3 == 252)
             {
                 Int32 math = (Int32)value1 + (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
                 Memory.RegisterB = Convert.ToByte(math);
                 return 0;
             }
             else if ((Int32)input3 == 253)
             {
                 Int32 math = (Int32)value1 + (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
                 Memory.RegisterC = Convert.ToByte(math);
                 return 0;
             }
             else if ((Int32)input3 == 254)
             {
                 Int32 math = (Int32)value1 + (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
                 Memory.RegisterD = Convert.ToByte(math);
                 return 0;
             }
@@ -574,7 +607,7 @@ namespace MingleDingle8
         }
         static int Jz(byte input1)
         {
-            if (Memory.RegisterD == 0)
+            if (Memory.ZeroFlag)
             {
                 Memory.ProgramCounter = (int)input1;
             }
@@ -582,7 +615,7 @@ namespace MingleDingle8
         }
         static int Jnz(byte input1)
         {
-            if (Memory.RegisterD != 0)
+            if (!Memory.ZeroFlag)
             {
                 Memory.ProgramCounter = (int)input1;
             }
