@@ -18,6 +18,8 @@ ID, Name, Description
 13 JNZ ID (jumps to lbl if zeroflag is nonzero)
 14 MBA R1,ADDR (moves register to address expansion bus a)
 15 MBB R1,ADDR (moves register to address expansion bus b)
+16 MBA ADDR,R1 (moves address in expansion bus a to register)
+17 MBB ADDR,R1 (moves address in expansion bus a to register)
 
 instructions are 4 bytes each
 */
@@ -48,12 +50,12 @@ namespace MingleDingle8
                 // prints serial console
                 if (Memory.SerialBus == 1)
                 {
-                    Console.Clear();
+                    //Console.Clear();
                     Console.WriteLine(System.Text.Encoding.Default.GetString(Memory.BusA));
                 }
                 else if (Memory.SerialBus == 2)
                 {
-                    Console.Clear();
+                    //Console.Clear();
                     Console.WriteLine(System.Text.Encoding.Default.GetString(Memory.BusB));
                 }
                 // prints cycle number
@@ -197,6 +199,22 @@ namespace MingleDingle8
             else if ((Int32)opcode == 15)
             {
                 Int32 status = MovReg2Ebb(input1, input2);
+                if (status == 1)
+                {
+                    Hlt();
+                }
+            }
+            else if ((Int32)opcode == 16)
+            {
+                Int32 status = MovEba2Reg(input1, input2);
+                if (status == 1)
+                {
+                    Hlt();
+                }
+            }
+            else if ((Int32)opcode == 17)
+            {
+                Int32 status = MovEbb2Reg(input1, input2);
                 if (status == 1)
                 {
                     Hlt();
@@ -744,6 +762,62 @@ namespace MingleDingle8
             {
                 Int32 ramposbutinInt32thistime = (Int32)rampos;
                 Memory.BusB[ramposbutinInt32thistime] = Memory.RegisterD;
+                return 0;
+            }
+            return 0;
+        }
+        static Int32 MovEba2Reg(byte input1, byte rampos)
+        {
+            if ((Int32)input1 == 251)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.RegisterA = Memory.BusA[ramposbutinInt32thistime];
+                return 0;
+            }
+            else if ((Int32)input1 == 252)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.RegisterB = Memory.BusA[ramposbutinInt32thistime];
+                return 0;
+            }
+            else if ((Int32)input1 == 253)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.RegisterC = Memory.BusA[ramposbutinInt32thistime];
+                return 0;
+            }
+            else if ((Int32)input1 == 254)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.RegisterD = Memory.BusA[ramposbutinInt32thistime];
+                return 0;
+            }
+            return 0;
+        }
+        static Int32 MovEbb2Reg(byte input1, byte rampos)
+        {
+            if ((Int32)input1 == 251)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.RegisterA = Memory.BusB[ramposbutinInt32thistime];
+                return 0;
+            }
+            else if ((Int32)input1 == 252)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.RegisterB = Memory.BusB[ramposbutinInt32thistime];
+                return 0;
+            }
+            else if ((Int32)input1 == 253)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.RegisterC = Memory.BusB[ramposbutinInt32thistime];
+                return 0;
+            }
+            else if ((Int32)input1 == 254)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.RegisterD = Memory.BusB[ramposbutinInt32thistime];
                 return 0;
             }
             return 0;
