@@ -18,6 +18,12 @@ ID, Name, Description
 13 JNZ ID (jumps to lbl if zeroflag is nonzero)
 14 SWB INT (switches bank from RAM/0, Bus A/1, Bus B/2, or ROM/3-6)
 15 MSG ID (interrupt-type thing but not really)
+16 MUL R1,R2,R3 (multiplies two registers to output register)
+17 DIV R1,R2,R3 (divides R1 by R2 and outputs quotient to R3)
+18 MOD R1,R2,R3 (divides R1 by R2 and outputs remainder to R3)
+19 JEQ R1,R2,ID (jumps to label if R1 equals R2)
+20 JLT R1,R2,ID (jumps to label if R1 is less than R2)
+21 JGT R1,R2,ID (jumps to label if R1 is greater than R2)
 
 MSGs:
 00 Print Bus A to console
@@ -80,12 +86,12 @@ namespace MingleDingle8
     }
     public static class Memory
     {
-        public static byte[] Ram = new byte[256]; // 256byte ram (bank 0)
+        public static byte[] Ram = new byte[256]; // 256byte ram
         public static byte[] Stack = new byte[256]; // 256byte stack
-        public static byte[] BusA = new byte[256]; // expanision bus a (bank 1)
-        public static byte[] BusB = new byte[256]; // expansion bus b (bank 2)
-        public static byte[] Rom; // 1kb program rom (banks 3, 4, 5, and 6)
-        public static byte[] CMem = new byte[256]; // currently banked memory
+        public static byte[] BusA = new byte[256]; // expansion bus a
+        public static byte[] BusB = new byte[256]; // expansion bus b
+        public static byte[] Rom; // 1kb program rom
+        public static byte[] CMem = new byte[65536]; // currently banked memory
         public static byte RegisterA; // A/251
         public static byte RegisterB; // B/252
         public static byte RegisterC; // C/253
@@ -95,6 +101,14 @@ namespace MingleDingle8
         public static bool ZeroFlag = true; // Z
         public static byte CurrentBank = 0; // CB
         public static byte MemPointer = 0; // MP
+        /*
+        16-bit address map in decimal
+        00000-01024: RAM
+        01024-09216: ROM
+        09216-09472: Bus A
+        09472-09728: Bus B
+        09728-65535: Unused memory
+        */
     }
     // cpu is entirely uncommented have fun hehe :3
     public static class Cpu
@@ -273,6 +287,54 @@ namespace MingleDingle8
             else if ((Int32)opcode == 15)
             {
                 Int32 status = Msg(input1);
+                if (status == 1)
+                {
+                    Hlt();
+                }
+            }
+            else if ((Int32)opcode == 16)
+            {
+                Int32 status = Mul(input1, input2, input3);
+                if (status == 1)
+                {
+                    Hlt();
+                }
+            }
+            else if ((Int32)opcode == 17)
+            {
+                Int32 status = Div(input1, input2, input3);
+                if (status == 1)
+                {
+                    Hlt();
+                }
+            }
+            else if ((Int32)opcode == 18)
+            {
+                Int32 status = Mod(input1, input2, input3);
+                if (status == 1)
+                {
+                    Hlt();
+                }
+            }
+            else if ((Int32)opcode == 19)
+            {
+                Int32 status = Jeq(input1, input2, input3);
+                if (status == 1)
+                {
+                    Hlt();
+                }
+            }
+            else if ((Int32)opcode == 20)
+            {
+                Int32 status = Jlt(input1, input2, input3);
+                if (status == 1)
+                {
+                    Hlt();
+                }
+            }
+            else if ((Int32)opcode == 21)
+            {
+                Int32 status = Jgt(input1, input2, input3);
                 if (status == 1)
                 {
                     Hlt();
@@ -944,6 +1006,381 @@ namespace MingleDingle8
                 Console.WriteLine("MSG ID invalid");
                 return 1;
             }
+        }
+        static Int32 Mul(byte input1, byte input2, byte input3)
+        {
+            byte value1;
+            byte value2;
+            byte value3;
+            if ((Int32)input1 == 251)
+            {
+                value1 = Memory.RegisterA;
+            }
+            else if ((Int32)input1 == 252)
+            {
+                value1 = Memory.RegisterB;
+            }
+            else if ((Int32)input1 == 253)
+            {
+                value1 = Memory.RegisterC;
+            }
+            else if ((Int32)input1 == 254)
+            {
+                value1 = Memory.RegisterD;
+            }
+            else
+            {
+                return 1;
+            }
+            if ((Int32)input2 == 251)
+            {
+                value2 = Memory.RegisterA;
+            }
+            else if ((Int32)input2 == 252)
+            {
+                value2 = Memory.RegisterB;
+            }
+            else if ((Int32)input2 == 253)
+            {
+                value2 = Memory.RegisterC;
+            }
+            else if ((Int32)input2 == 254)
+            {
+                value2 = Memory.RegisterD;
+            }
+            else
+            {
+                return 1;
+            }
+            if ((Int32)input3 == 251)
+            {
+                Int32 math = (Int32)value1 * (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
+                Memory.RegisterA = Convert.ToByte(math);
+                return 0;
+            }
+            else if ((Int32)input3 == 252)
+            {
+                Int32 math = (Int32)value1 * (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
+                Memory.RegisterB = Convert.ToByte(math);
+                return 0;
+            }
+            else if ((Int32)input3 == 253)
+            {
+                Int32 math = (Int32)value1 * (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
+                Memory.RegisterC = Convert.ToByte(math);
+                return 0;
+            }
+            else if ((Int32)input3 == 254)
+            {
+                Int32 math = (Int32)value1 * (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
+                Memory.RegisterD = Convert.ToByte(math);
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+            return 1;
+        }
+        static Int32 Div(byte input1, byte input2, byte input3)
+        {
+            byte value1;
+            byte value2;
+            byte value3;
+            if ((Int32)input1 == 251)
+            {
+                value1 = Memory.RegisterA;
+            }
+            else if ((Int32)input1 == 252)
+            {
+                value1 = Memory.RegisterB;
+            }
+            else if ((Int32)input1 == 253)
+            {
+                value1 = Memory.RegisterC;
+            }
+            else if ((Int32)input1 == 254)
+            {
+                value1 = Memory.RegisterD;
+            }
+            else
+            {
+                return 1;
+            }
+            if ((Int32)input2 == 251)
+            {
+                value2 = Memory.RegisterA;
+            }
+            else if ((Int32)input2 == 252)
+            {
+                value2 = Memory.RegisterB;
+            }
+            else if ((Int32)input2 == 253)
+            {
+                value2 = Memory.RegisterC;
+            }
+            else if ((Int32)input2 == 254)
+            {
+                value2 = Memory.RegisterD;
+            }
+            else
+            {
+                return 1;
+            }
+            if ((Int32)input3 == 251)
+            {
+                Int32 math = (Int32)value1 / (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
+                Memory.RegisterA = Convert.ToByte(math);
+                return 0;
+            }
+            else if ((Int32)input3 == 252)
+            {
+                Int32 math = (Int32)value1 / (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
+                Memory.RegisterB = Convert.ToByte(math);
+                return 0;
+            }
+            else if ((Int32)input3 == 253)
+            {
+                Int32 math = (Int32)value1 / (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
+                Memory.RegisterC = Convert.ToByte(math);
+                return 0;
+            }
+            else if ((Int32)input3 == 254)
+            {
+                Int32 math = (Int32)value1 / (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
+                Memory.RegisterD = Convert.ToByte(math);
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+            return 1;
+        }
+        static Int32 Mod(byte input1, byte input2, byte input3)
+        {
+            byte value1;
+            byte value2;
+            byte value3;
+            if ((Int32)input1 == 251)
+            {
+                value1 = Memory.RegisterA;
+            }
+            else if ((Int32)input1 == 252)
+            {
+                value1 = Memory.RegisterB;
+            }
+            else if ((Int32)input1 == 253)
+            {
+                value1 = Memory.RegisterC;
+            }
+            else if ((Int32)input1 == 254)
+            {
+                value1 = Memory.RegisterD;
+            }
+            else
+            {
+                return 1;
+            }
+            if ((Int32)input2 == 251)
+            {
+                value2 = Memory.RegisterA;
+            }
+            else if ((Int32)input2 == 252)
+            {
+                value2 = Memory.RegisterB;
+            }
+            else if ((Int32)input2 == 253)
+            {
+                value2 = Memory.RegisterC;
+            }
+            else if ((Int32)input2 == 254)
+            {
+                value2 = Memory.RegisterD;
+            }
+            else
+            {
+                return 1;
+            }
+            if ((Int32)input3 == 251)
+            {
+                Int32 math = (Int32)value1 % (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
+                Memory.RegisterA = Convert.ToByte(math);
+                return 0;
+            }
+            else if ((Int32)input3 == 252)
+            {
+                Int32 math = (Int32)value1 % (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
+                Memory.RegisterB = Convert.ToByte(math);
+                return 0;
+            }
+            else if ((Int32)input3 == 253)
+            {
+                Int32 math = (Int32)value1 % (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
+                Memory.RegisterC = Convert.ToByte(math);
+                return 0;
+            }
+            else if ((Int32)input3 == 254)
+            {
+                Int32 math = (Int32)value1 % (Int32)value2;
+                if (math == 0)
+                {
+                    Memory.ZeroFlag = true;
+                }
+                else
+                {
+                    Memory.ZeroFlag = false;
+                }
+                Memory.RegisterD = Convert.ToByte(math);
+                return 0;
+            }
+            else
+            {
+                return 1;
+            }
+            return 1;
+        }
+        static int Jeq(byte input1, byte input2, byte input3)
+        {
+            if (input1 == input2)
+            {
+                for (int i = 0; i < Memory.Rom.Length; i += 4) 
+                {
+                    if ((int)Memory.Rom[i] == 10)
+                    {
+                        if ((int)Memory.Rom[i + 1] == input3)
+                        {
+                            Memory.ProgramCounter = (short)i;
+                            return 0;
+                        }
+                    }
+                }
+            }
+            return 0;
+        }
+        static int Jlt(byte input1, byte input2, byte input3)
+        {
+            if (input1 < input2)
+            {
+                for (int i = 0; i < Memory.Rom.Length; i += 4) 
+                {
+                    if ((int)Memory.Rom[i] == 10)
+                    {
+                        if ((int)Memory.Rom[i + 1] == input3)
+                        {
+                            Memory.ProgramCounter = (short)i;
+                            return 0;
+                        }
+                    }
+                }
+            }
+            return 0;
+        }
+        static int Jgt(byte input1, byte input2, byte input3)
+        {
+            if (input1 > input2)
+            {
+                for (int i = 0; i < Memory.Rom.Length; i += 4) 
+                {
+                    if ((int)Memory.Rom[i] == 10)
+                    {
+                        if ((int)Memory.Rom[i + 1] == input3)
+                        {
+                            Memory.ProgramCounter = (short)i;
+                            return 0;
+                        }
+                    }
+                }
+            }
+            return 0;
         }
         static Int32 MovReg2Eba(byte input1, byte rampos)
         {
