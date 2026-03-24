@@ -56,6 +56,7 @@ namespace MingleDingle8
                 // executes instruction 1
                 Cpu.Exec(Memory.Rom[Memory.ProgramCounter], Memory.Rom[Memory.ProgramCounter + 1], Memory.Rom[Memory.ProgramCounter + 2], Memory.Rom[Memory.ProgramCounter + 3]);
                 // prints serial console
+                /*
                 if (Memory.SerialBus == 1)
                 {
                     //Console.Clear();
@@ -66,8 +67,9 @@ namespace MingleDingle8
                     //Console.Clear();
                     Console.WriteLine(System.Text.Encoding.Default.GetString(Memory.BusB));
                 }
+                */
                 // prints cycle number
-                Console.WriteLine(Memory.ProgramCounter/4);
+                //Console.WriteLine(Memory.ProgramCounter/4);
             }
         }
     }

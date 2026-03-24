@@ -15,12 +15,12 @@ Here is the instruction set:
 - 07 PUSH R1 (pushes content of register into "stack")
 - 08 POP R1 (pulls top of stack into register)
 - 09 HLT (halts)
-- 10 LBL ID (function)
-- 11 JMP ID (jumps to lbl)
-- 12 JZ ID (jumps to lbl if zeroflag is zero)
-- 13 JNZ ID (jumps to lbl if zeroflag is nonzero)
-- 14 SWB INT (switches bank from RAM/0, Bus A/1, Bus B/2, or ROM/3-6)
-- 15 MSG ID (interrupt-type thing but not really)
+- 0A LBL ID (function)
+- 0B JMP ID (jumps to lbl)
+- 0C JZ ID (jumps to lbl if zeroflag is zero)
+- 0D JNZ ID (jumps to lbl if zeroflag is nonzero)
+- 0E SWB INT (switches bank from RAM/0, Bus A/1, Bus B/2, or ROM/3-6)
+- 0F MSG ID (interrupt-type thing but not really)
 
 Here are the implemented MSGs:
 
