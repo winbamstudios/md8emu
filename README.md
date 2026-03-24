@@ -1,7 +1,7 @@
 # md8emu
 An emulator for a processor architecture I made up
 
-This is a FOSS implementation of MingleDingle-8, a CPU architecture that is fully turing complete.
+This is a FOSS implementation of MingusDingus-8, a CPU architecture that is fully turing complete.
 
 Here is the instruction set:
 
@@ -21,5 +21,16 @@ Here is the instruction set:
 - 13 JNZ ID (jumps to lbl if zeroflag is nonzero)
 - 14 SWB INT (switches bank from RAM/0, Bus A/1, Bus B/2, or ROM/3-6)
 - 15 MSG ID (interrupt-type thing but not really)
+
+Here are the implemented MSGs:
+
+- 00 Print Bus A to console
+- 01 Print Bus B to console
+- 02 Accept key press from Bus A (Writes key to location in Bus A specified by Register A)
+- 03 Accept key press from Bus B (Writes key to location in Bus B specified by Register A)
+- 04 Clear currently selected bank
+- 05 Reset processor
+- 06 Copy current bank to bank ID in Register A
+- 07 Jump to specific instruction specified in Register A
 
 made over an extended period of time
