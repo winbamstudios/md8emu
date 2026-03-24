@@ -29,10 +29,15 @@ MSGs:
 06 Copy current bank to bank ID in Register A
 07 Jump to specific instruction specified in Register A
 
+TO BE IMPLEMENTED:
+MSGs:
+08 Switch registers A and B into 16-bit mode
+09 Switch registers C and D into 16-bit mode
+Features:
+16-bit addressing
+
 instructions are 4 bytes each
 */
-
-// THIS IS MINGLEDINGLE-8 COMPLIANT (minus LBL)
 
 namespace MingleDingle8
 {
@@ -85,11 +90,11 @@ namespace MingleDingle8
         public static byte RegisterB; // B/252
         public static byte RegisterC; // C/253
         public static byte RegisterD; // D/254
-        public static byte StackPointer; // SP
-        public static Int32 ProgramCounter; // PC
+        public static byte StackPointer; // SP/255
+        public static short ProgramCounter; // PC
         public static bool ZeroFlag = true; // Z
         public static byte CurrentBank = 0; // CB
-        public static byte SerialBus = 1; // 0 is disabled, 1 is Bus A, 2 is Bus B
+        public static byte MemPointer = 0; // MP
     }
     // cpu is entirely uncommented have fun hehe :3
     public static class Cpu
@@ -524,6 +529,11 @@ namespace MingleDingle8
                     Memory.RegisterD = Memory.RegisterA;
                     return 0;
                 }
+                else if ((Int32)input2 == 255)
+                {
+                    Memory.StackPointer = Memory.RegisterA;
+                    return 0;
+                }
                 else
                 {
                     return 1;
@@ -550,6 +560,11 @@ namespace MingleDingle8
                 else if ((Int32)input2 == 254)
                 {
                     Memory.RegisterD = Memory.RegisterB;
+                    return 0;
+                }
+                else if ((Int32)input2 == 255)
+                {
+                    Memory.StackPointer = Memory.RegisterA;
                     return 0;
                 }
                 else
@@ -580,6 +595,11 @@ namespace MingleDingle8
                     Memory.RegisterD = Memory.RegisterC;
                     return 0;
                 }
+                else if ((Int32)input2 == 255)
+                {
+                    Memory.StackPointer = Memory.RegisterA;
+                    return 0;
+                }
                 else
                 {
                     return 1;
@@ -605,6 +625,11 @@ namespace MingleDingle8
                 else if ((Int32)input2 == 254)
                 {
                     Memory.RegisterD = Memory.RegisterD;
+                    return 0;
+                }
+                else if ((Int32)input2 == 255)
+                {
+                    Memory.StackPointer = Memory.RegisterA;
                     return 0;
                 }
                 else
@@ -640,6 +665,12 @@ namespace MingleDingle8
                 Memory.CMem[ramposbutinInt32thistime] = Memory.RegisterD;
                 return 0;
             }
+            else if ((Int32)input1 == 254)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.CMem[ramposbutinInt32thistime] = Memory.StackPointer;
+                return 0;
+            }
             return 0;
         }
         static Int32 MovMem2Reg(byte rampos, byte input1)
@@ -668,6 +699,12 @@ namespace MingleDingle8
                 Memory.RegisterD = Memory.CMem[ramposbutinInt32thistime];
                 return 0;
             }
+            else if ((Int32)input1 == 254)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)rampos;
+                Memory.StackPointer = Memory.CMem[ramposbutinInt32thistime];
+                return 0;
+            }
             return 0;
         }
         static Int32 MovInt2Reg(byte integer, byte input1)
@@ -694,6 +731,12 @@ namespace MingleDingle8
             {
                 Int32 ramposbutinInt32thistime = (Int32)integer;
                 Memory.RegisterD = integer;
+                return 0;
+            }
+            else if ((Int32)input1 == 255)
+            {
+                Int32 ramposbutinInt32thistime = (Int32)integer;
+                Memory.StackPointer = integer;
                 return 0;
             }
             return 0;
@@ -755,7 +798,7 @@ namespace MingleDingle8
                 {
                     if ((int)Memory.Rom[i + 1] == input1)
                     {
-                        Memory.ProgramCounter = i;
+                        Memory.ProgramCounter = (short)i;
                         return 0;
                     }
                 }
@@ -772,7 +815,7 @@ namespace MingleDingle8
                     {
                         if ((int)Memory.Rom[i + 1] == input1)
                         {
-                            Memory.ProgramCounter = i;
+                            Memory.ProgramCounter = (short)i;
                             return 0;
                         }
                     }
@@ -790,7 +833,7 @@ namespace MingleDingle8
                     {
                         if ((int)Memory.Rom[i + 1] == input1)
                         {
-                            Memory.ProgramCounter = i;
+                            Memory.ProgramCounter = (short)i;
                             return 0;
                         }
                     }
