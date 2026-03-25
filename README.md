@@ -38,4 +38,13 @@ Here are the implemented MSGs:
 - 06 Copy current bank to bank ID in Register A
 - 07 Jump to specific instruction specified in Register A
 
+To-dos:
+- [x] MOV to stack pointer
+- [ ] 16 bit addressing
+- [ ] Refactor assembly language to be more similar to Intel syntax
+- [ ] Add memory pointer (MP) and ability to MOV to it
+- [ ] Add integer operations on SP and MP
+- [ ] Update Bus A and B to act as single bytes that transfer 1 bit at a time similarly to actual serial
+- [ ] Improve documentation for the assembly language
+
 made over an extended period of time
