@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "VzOW9crLW6W7Q95iw/ACPF0HN9FSfYbKTe07xKpWGsMIzsxdtssFjQPW4OHBHdidVA+X4Qi4YRLc9DafRvQhDQ==",
+  "dgSpecHash": "IIYS/GEerC7aQ/SKbGhj0Z7AaDXv0lAQiSuE/a03gmFujPiDYvtnmlOAAhRgPJpSdGt9Lz8OySFfwXpmfL4CZA==",
   "success": true,
-  "projectFilePath": "/home/will/MingleDingle16/MingleDingle8.csproj",
+  "projectFilePath": "/home/will/MingleDingle16/MingusDingus8.csproj",
   "expectedPackageFiles": [
     "/home/will/.nuget/packages/microsoft.aspnetcore.app.ref/8.0.25/microsoft.aspnetcore.app.ref.8.0.25.nupkg.sha512"
   ],

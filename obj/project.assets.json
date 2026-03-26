@@ -13,9 +13,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/will/MingleDingle16/MingleDingle8.csproj",
-      "projectName": "MingleDingle8",
-      "projectPath": "/home/will/MingleDingle16/MingleDingle8.csproj",
+      "projectUniqueName": "/home/will/MingleDingle16/MingusDingus8.csproj",
+      "projectName": "MingusDingus8",
+      "projectPath": "/home/will/MingleDingle16/MingusDingus8.csproj",
       "packagesPath": "/home/will/.nuget/packages/",
       "outputPath": "/home/will/MingleDingle16/obj/",
       "projectStyle": "PackageReference",
