@@ -34,7 +34,7 @@ MSGs:
 03 Accept key press from Bus B
 04 Unused
 05 Reset processor
-06 Unusee
+06 Unused
 07 Jump to specific instruction specified in Register A
 08 Switch to 8-bit addressing
 09 Switch to 16-bit addressing
@@ -49,6 +49,7 @@ namespace MingusDingus8
         static void Main(string[] args)
         {
             Console.WriteLine("MD8 Emulator Mar 2026 Release");
+            Console.WriteLine(Memory.BusA.ToString());
             Console.WriteLine("© 2026 winbamstudios");
             try
             {
@@ -83,7 +84,7 @@ namespace MingusDingus8
     }
     public static class Memory
     {
-        public static byte[] Ram = new byte[4096]; // 4kb ram
+        public static byte[] Ram = new byte[16384]; // 16kb ram
         public static byte[] Stack = new byte[256]; // 256byte stack
         public static byte BusA = 0; // serial bus a
         public static byte BusB = 0; // serial bus b
@@ -102,9 +103,8 @@ namespace MingusDingus8
         public static byte MemPointerB = 0; // MP - used in 16-bit mode
         /*
         16-bit address map in hexadecimal
-        0000-1000: 4KB RAM
-        1000-4000: 12KB unused
-        4000-C000: 32KB of ROM space
+        0000-3FFF: 16KB RAM
+        4000-BFFF: 32KB of ROM space
         C000-FFFF: Free space
         */
     }
@@ -981,12 +981,60 @@ namespace MingusDingus8
             */
             if (input1 == 0)
             {
-                Console.Write(Memory.BusA.ToString());
+                byte[] busArray = { Memory.BusA, 0 };
+                if (Memory.BusA == 13)
+                {
+                    Console.WriteLine();
+                }
+                else if (Memory.BusA == 127)
+                {
+                    try
+                    {
+                        Console.CursorLeft--;
+                        Console.Write(" ");
+                        Console.CursorLeft--;
+                    }
+                    catch
+                    {
+                        // do nothing!!!!!!!!!!!!
+                    }
+                }
+                else
+                {
+                    Console.Write(BitConverter.ToChar(busArray));
+                    Console.CursorLeft--;
+                    Console.Write(" ");
+                    Console.CursorLeft--;
+                }
                 return 0;
             }
             else if (input1 == 1)
             {
-                Console.Write(Memory.BusB.ToString());
+                byte[] busArray = { Memory.BusB, 0 };
+                if (Memory.BusB == 13)
+                {
+                    Console.WriteLine();
+                }
+                else if (Memory.BusB == 127)
+                {
+                    try
+                    {
+                        Console.CursorLeft--;
+                        Console.Write(" ");
+                        Console.CursorLeft--;
+                    }
+                    catch
+                    {
+                        // do nothing!!!!!!!!!!!!
+                    }
+                }
+                else
+                {
+                    Console.Write(BitConverter.ToChar(busArray));
+                    Console.CursorLeft--;
+                    Console.Write(" ");
+                    Console.CursorLeft--;
+                }
                 return 0;
             }
             else if (input1 == 2)
@@ -1469,7 +1517,59 @@ namespace MingusDingus8
         }
         static int Outb(byte input1, byte input2)
         {
-            
+            if (input2 == 0)
+            {
+                if (input1 == 251)
+                {
+                    Memory.BusA = Memory.RegisterA;
+                }
+                else if (input1 == 252)
+                {
+                    Memory.BusA = Memory.RegisterB;
+                }
+                else if (input1 == 253)
+                {
+                    Memory.BusA = Memory.RegisterC;
+                }
+                else if (input1 == 254)
+                {
+                    Memory.BusA = Memory.RegisterD;
+                }
+                else
+                {
+                    Console.WriteLine("Not a register!");
+                    Hlt();
+                }
+            }
+            else if (input2 == 1)
+            {
+                if (input1 == 251)
+                {
+                    Memory.BusB = Memory.RegisterA;
+                }
+                else if (input1 == 252)
+                {
+                    Memory.BusB = Memory.RegisterB;
+                }
+                else if (input1 == 253)
+                {
+                    Memory.BusB = Memory.RegisterC;
+                }
+                else if (input1 == 254)
+                {
+                    Memory.BusB = Memory.RegisterD;
+                }
+                else
+                {
+                    Console.WriteLine("Not a register!");
+                    return 1;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid bus ID");
+                return 1;
+            }
             return 0;
         }
         /*
