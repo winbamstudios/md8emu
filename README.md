@@ -26,17 +26,21 @@ Here is the instruction set:
 - 19 JEQ R1,R2,ID (jumps to label if R1 equals R2)
 - 20 JLT R1,R2,ID (jumps to label if R1 is less than R2)
 - 21 JGT R1,R2,ID (jumps to label if R1 is greater than R2)
+- 22 INB R1,ID (takes byte from Bus A (0) or Bus B (1) and copies to R1)
+- 23 OUTB R1,ID  (takes R1 and copies it to Bus A (0) or Bus B (1))
 
 Here are the implemented MSGs:
 
 - 00 Print Bus A to console
 - 01 Print Bus B to console
-- 02 Accept key press from Bus A (Writes key to location in Bus A specified by Register A)
-- 03 Accept key press from Bus B (Writes key to location in Bus B specified by Register A)
-- 04 Clear currently selected bank
+- 02 Accept key press from Bus A
+- 03 Accept key press from Bus B
+- 04 Unused
 - 05 Reset processor
-- 06 Copy current bank to bank ID in Register A
+- 06 Unused
 - 07 Jump to specific instruction specified in Register A
+- 08 Switch to 8-bit addressing
+- 09 Switch to 16-bit addressing
 
 To-dos:
 - [x] MOV to stack pointer
