@@ -566,6 +566,11 @@ namespace MingusDingus8
                     Memory.StackPointer = Memory.RegisterA;
                     return 0;
                 }
+                else if ((Int32)input2 == 250)
+                {
+                    Memory.MemPointerA = Memory.RegisterA;
+                    return 0;
+                }
                 else
                 {
                     return 1;
@@ -596,7 +601,12 @@ namespace MingusDingus8
                 }
                 else if ((Int32)input2 == 255)
                 {
-                    Memory.StackPointer = Memory.RegisterA;
+                    Memory.StackPointer = Memory.RegisterB;
+                    return 0;
+                }
+                else if ((Int32)input2 == 250)
+                {
+                    Memory.MemPointerA = Memory.RegisterB;
                     return 0;
                 }
                 else
@@ -629,7 +639,12 @@ namespace MingusDingus8
                 }
                 else if ((Int32)input2 == 255)
                 {
-                    Memory.StackPointer = Memory.RegisterA;
+                    Memory.StackPointer = Memory.RegisterC;
+                    return 0;
+                }
+                else if ((Int32)input2 == 250)
+                {
+                    Memory.MemPointerA = Memory.RegisterC;
                     return 0;
                 }
                 else
@@ -661,7 +676,12 @@ namespace MingusDingus8
                 }
                 else if ((Int32)input2 == 255)
                 {
-                    Memory.StackPointer = Memory.RegisterA;
+                    Memory.StackPointer = Memory.RegisterD;
+                    return 0;
+                }
+                else if ((Int32)input2 == 250)
+                {
+                    Memory.MemPointerA = Memory.RegisterD;
                     return 0;
                 }
                 else
@@ -677,13 +697,20 @@ namespace MingusDingus8
             if ((Int32)input1 == 251)
             {
                 ushort ramposbutshorter = 0;
-                if (Memory.Addr16Bit)
+                if (rampos == 250 && rampos16 == 0)
                 {
-                    BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    ramposbutshorter = (ushort)Memory.MemPointerA;
                 }
                 else
                 {
-                    ramposbutshorter = (ushort)rampos;
+                    if (Memory.Addr16Bit)
+                    {
+                        BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    }
+                    else
+                    {
+                        ramposbutshorter = (ushort)rampos;
+                    }
                 }
                 Memory.CMem[ramposbutshorter] = Memory.RegisterA;
                 return 0;
@@ -691,13 +718,20 @@ namespace MingusDingus8
             else if ((Int32)input1 == 252)
             {
                 ushort ramposbutshorter = 0;
-                if (Memory.Addr16Bit)
+                if (rampos == 250 && rampos16 == 0)
                 {
-                    BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    ramposbutshorter = (ushort)Memory.MemPointerA;
                 }
                 else
                 {
-                    ramposbutshorter = (ushort)rampos;
+                    if (Memory.Addr16Bit)
+                    {
+                        BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    }
+                    else
+                    {
+                        ramposbutshorter = (ushort)rampos;
+                    }
                 }
                 Memory.CMem[ramposbutshorter] = Memory.RegisterB;
                 return 0;
@@ -705,13 +739,20 @@ namespace MingusDingus8
             else if ((Int32)input1 == 253)
             {
                 ushort ramposbutshorter = 0;
-                if (Memory.Addr16Bit)
+                if (rampos == 250 && rampos16 == 0)
                 {
-                    BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    ramposbutshorter = (ushort)Memory.MemPointerA;
                 }
                 else
                 {
-                    ramposbutshorter = (ushort)rampos;
+                    if (Memory.Addr16Bit)
+                    {
+                        BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    }
+                    else
+                    {
+                        ramposbutshorter = (ushort)rampos;
+                    }
                 }
                 Memory.CMem[ramposbutshorter] = Memory.RegisterC;
                 return 0;
@@ -719,13 +760,20 @@ namespace MingusDingus8
             else if ((Int32)input1 == 254)
             {
                 ushort ramposbutshorter = 0;
-                if (Memory.Addr16Bit)
+                if (rampos == 250 && rampos16 == 0)
                 {
-                    BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    ramposbutshorter = (ushort)Memory.MemPointerA;
                 }
                 else
                 {
-                    ramposbutshorter = (ushort)rampos;
+                    if (Memory.Addr16Bit)
+                    {
+                        BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    }
+                    else
+                    {
+                        ramposbutshorter = (ushort)rampos;
+                    }
                 }
                 Memory.CMem[ramposbutshorter] = Memory.RegisterD;
                 return 0;
@@ -733,13 +781,20 @@ namespace MingusDingus8
             else if ((Int32)input1 == 255)
             {
                 ushort ramposbutshorter = 0;
-                if (Memory.Addr16Bit)
+                if (rampos == 250 && rampos16 == 0)
                 {
-                    BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    ramposbutshorter = (ushort)Memory.MemPointerA;
                 }
                 else
                 {
-                    ramposbutshorter = (ushort)rampos;
+                    if (Memory.Addr16Bit)
+                    {
+                        BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    }
+                    else
+                    {
+                        ramposbutshorter = (ushort)rampos;
+                    }
                 }
                 Memory.CMem[ramposbutshorter] = Memory.StackPointer;
                 return 0;
@@ -751,13 +806,20 @@ namespace MingusDingus8
             if ((Int32)input1 == 251)
             {
                 ushort ramposbutshorter = 0;
-                if (Memory.Addr16Bit)
+                if (rampos == 250 && rampos16 == 0)
                 {
-                    BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    ramposbutshorter = (ushort)Memory.MemPointerA;
                 }
                 else
                 {
-                    ramposbutshorter = (ushort)rampos;
+                    if (Memory.Addr16Bit)
+                    {
+                        BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    }
+                    else
+                    {
+                        ramposbutshorter = (ushort)rampos;
+                    }
                 }
                 Memory.RegisterA = Memory.CMem[ramposbutshorter];
                 return 0;
@@ -765,13 +827,20 @@ namespace MingusDingus8
             else if ((Int32)input1 == 252)
             {
                 ushort ramposbutshorter = 0;
-                if (Memory.Addr16Bit)
+                if (rampos == 250 && rampos16 == 0)
                 {
-                    BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    ramposbutshorter = (ushort)Memory.MemPointerA;
                 }
                 else
                 {
-                    ramposbutshorter = (ushort)rampos;
+                    if (Memory.Addr16Bit)
+                    {
+                        BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    }
+                    else
+                    {
+                        ramposbutshorter = (ushort)rampos;
+                    }
                 }
                 Memory.RegisterB = Memory.CMem[ramposbutshorter];
                 return 0;
@@ -779,13 +848,20 @@ namespace MingusDingus8
             else if ((Int32)input1 == 253)
             {
                 ushort ramposbutshorter = 0;
-                if (Memory.Addr16Bit)
+                if (rampos == 250 && rampos16 == 0)
                 {
-                    BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    ramposbutshorter = (ushort)Memory.MemPointerA;
                 }
                 else
                 {
-                    ramposbutshorter = (ushort)rampos;
+                    if (Memory.Addr16Bit)
+                    {
+                        BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    }
+                    else
+                    {
+                        ramposbutshorter = (ushort)rampos;
+                    }
                 }
                 Memory.RegisterC = Memory.CMem[ramposbutshorter];
                 return 0;
@@ -793,13 +869,20 @@ namespace MingusDingus8
             else if ((Int32)input1 == 254)
             {
                 ushort ramposbutshorter = 0;
-                if (Memory.Addr16Bit)
+                if (rampos == 250 && rampos16 == 0)
                 {
-                    BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    ramposbutshorter = (ushort)Memory.MemPointerA;
                 }
                 else
                 {
-                    ramposbutshorter = (ushort)rampos;
+                    if (Memory.Addr16Bit)
+                    {
+                        BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    }
+                    else
+                    {
+                        ramposbutshorter = (ushort)rampos;
+                    }
                 }
                 Memory.RegisterD = Memory.CMem[ramposbutshorter];
                 return 0;
@@ -807,13 +890,20 @@ namespace MingusDingus8
             else if ((Int32)input1 == 255)
             {
                 ushort ramposbutshorter = 0;
-                if (Memory.Addr16Bit)
+                if (rampos == 250 && rampos16 == 0)
                 {
-                    BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    ramposbutshorter = (ushort)Memory.MemPointerA;
                 }
                 else
                 {
-                    ramposbutshorter = (ushort)rampos;
+                    if (Memory.Addr16Bit)
+                    {
+                        BitConverter.ToUInt16(new byte[2] {rampos16, rampos}, 0);
+                    }
+                    else
+                    {
+                        ramposbutshorter = (ushort)rampos;
+                    }
                 }
                 Memory.StackPointer = Memory.CMem[ramposbutshorter];
                 return 0;
