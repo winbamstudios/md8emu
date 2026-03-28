@@ -41,9 +41,9 @@ Here are the implemented MSGs:
 To-dos:
 - [x] MOV to stack pointer
 - [x] 16 bit addressing
-- [ ] Refactor MD8 assembly language to be more similar to Intel syntax
-  - [ ] Make RAM addresses in MD8 assembly hexadecimal instead of decimal
-  - [ ] Change syntax from "MOV,6,A,0" to "mov 6,a"
+- [x] Refactor MD8 assembly language to be more similar to Intel syntax
+  - [x] Make RAM addresses in MD8 assembly hexadecimal instead of decimal
+  - [x] Change syntax from "MOV,6,A,0" to "mov 6,a"
 - [ ] Add memory pointer (MP) and ability to MOV to it
 - [ ] Add integer operations on SP and MP
 - [x] Update Bus A and B to act as single bytes that transfer 1 bit at a time similarly to actual serial
