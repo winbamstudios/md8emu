@@ -24,8 +24,8 @@ ID, Name, Description
 19 JEQ R1,R2,ID (jumps to label if R1 equals R2)
 20 JLT R1,R2,ID (jumps to label if R1 is less than R2)
 21 JGT R1,R2,ID (jumps to label if R1 is greater than R2)
-22 MOV R1,BUS (copy register to bus)
-23 MOV BUS,R1 (copy bus to register)
+22 INB R1,ID (takes byte from Bus A (0) or Bus B (1) and copies to R1)
+23 OUTB R1,ID  (takes R1 and copies it to Bus A (0) or Bus B (1))
 
 MSGs:
 00 Print Bus A to console
@@ -289,6 +289,22 @@ namespace MingusDingus8
             else if ((Int32)opcode == 21)
             {
                 Int32 status = Jgt(input1, input2, input3);
+                if (status == 1)
+                {
+                    Hlt();
+                }
+            }
+            else if ((Int32)opcode == 22)
+            {
+                Int32 status = Inb(input1, input2);
+                if (status == 1)
+                {
+                    Hlt();
+                }
+            }
+            else if ((Int32)opcode == 23)
+            {
+                Int32 status = Outb(input1, input2);
                 if (status == 1)
                 {
                     Hlt();
@@ -1392,6 +1408,68 @@ namespace MingusDingus8
                     }
                 }
             }
+            return 0;
+        }
+        static int Inb(byte input1, byte input2)
+        {
+            if (input2 == 0)
+            {
+                if (input1 == 251)
+                {
+                    Memory.RegisterA = Memory.BusA;
+                }
+                else if (input1 == 252)
+                {
+                    Memory.RegisterB = Memory.BusA;
+                }
+                else if (input1 == 253)
+                {
+                    Memory.RegisterC = Memory.BusA;
+                }
+                else if (input1 == 254)
+                {
+                    Memory.RegisterD = Memory.BusA;
+                }
+                else
+                {
+                    Console.WriteLine("Not a register!");
+                    Hlt();
+                }
+            }
+            else if (input2 == 1)
+            {
+                if (input1 == 251)
+                {
+                    Memory.RegisterA = Memory.BusB;
+                }
+                else if (input1 == 252)
+                {
+                    Memory.RegisterB = Memory.BusB;
+                }
+                else if (input1 == 253)
+                {
+                    Memory.RegisterC = Memory.BusB;
+                }
+                else if (input1 == 254)
+                {
+                    Memory.RegisterD = Memory.BusB;
+                }
+                else
+                {
+                    Console.WriteLine("Not a register!");
+                    return 1;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid bus ID");
+                return 1;
+            }
+            return 0;
+        }
+        static int Outb(byte input1, byte input2)
+        {
+            
             return 0;
         }
         /*
