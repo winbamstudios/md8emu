@@ -1070,12 +1070,38 @@ namespace MingusDingus8
             */
             if (input1 == 0)
             {
-                Console.Write((char)Memory.BusA);
+                if (Memory.BusA == 15)
+                {
+                    Console.WriteLine();
+                }
+                else if (Memory.BusA == 127)
+                {
+                    Console.CursorLeft--;
+                    Console.Write(" ");
+                    Console.CursorLeft--;
+                }
+                else
+                {
+                    Console.Write((char)Memory.BusA);
+                }
                 return 0;
             }
             else if (input1 == 1)
             {
-                Console.Write((char)Memory.BusB);
+                if (Memory.BusB == 15)
+                {
+                    Console.WriteLine();
+                }
+                else if (Memory.BusB == 127)
+                {
+                    Console.CursorLeft--;
+                    Console.Write(" ");
+                    Console.CursorLeft--;
+                }
+                else
+                {
+                    Console.Write((char)Memory.BusB);
+                }
                 return 0;
             }
             else if (input1 == 2)
