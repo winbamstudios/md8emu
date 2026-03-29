@@ -1121,17 +1121,23 @@ namespace MingusDingus8
             else if (input1 == 2)
             {
                 Memory.BusA = Convert.ToByte(Console.ReadKey().KeyChar);
-                Console.CursorLeft--;
-                Console.Write(" ");
-                Console.CursorLeft--;
+                if (Memory.BusA != 13 && Memory.BusA != 127)
+                {
+                    Console.CursorLeft--;
+                    Console.Write(" ");
+                    Console.CursorLeft--;
+                }
                 return 0;
             }
             else if (input1 == 3)
             {
                 Memory.BusB = Convert.ToByte(Console.ReadKey().KeyChar);
-                Console.CursorLeft--;
-                Console.Write(" ");
-                Console.CursorLeft--;
+                if (Memory.BusB != 13 && Memory.BusB != 127)
+                {
+                    Console.CursorLeft--;
+                    Console.Write(" ");
+                    Console.CursorLeft--;
+                }
                 return 0;
             }
             else if (input1 == 4)
