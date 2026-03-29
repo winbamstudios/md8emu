@@ -1123,9 +1123,16 @@ namespace MingusDingus8
                 Memory.BusA = Convert.ToByte(Console.ReadKey().KeyChar);
                 if (Memory.BusA != 13 && Memory.BusA != 127)
                 {
-                    Console.CursorLeft--;
-                    Console.Write(" ");
-                    Console.CursorLeft--;
+                    try
+                    {
+                        Console.CursorLeft--;
+                        Console.Write(" ");
+                        Console.CursorLeft--;
+                    }
+                    catch
+                    {
+                        // do nothing!!!!!!!!!!
+                    }
                 }
                 return 0;
             }
@@ -1134,9 +1141,16 @@ namespace MingusDingus8
                 Memory.BusB = Convert.ToByte(Console.ReadKey().KeyChar);
                 if (Memory.BusB != 13 && Memory.BusB != 127)
                 {
-                    Console.CursorLeft--;
-                    Console.Write(" ");
-                    Console.CursorLeft--;
+                    try
+                    {
+                        Console.CursorLeft--;
+                        Console.Write(" ");
+                        Console.CursorLeft--;
+                    }
+                    catch
+                    {
+                        // do nothing!!!!!!!!!!
+                    }
                 }
                 return 0;
             }
