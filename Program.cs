@@ -1070,7 +1070,7 @@ namespace MingusDingus8
             */
             if (input1 == 0)
             {
-                if (Memory.BusA == 15)
+                if (Memory.BusA == 13)
                 {
                     Console.WriteLine();
                 }
