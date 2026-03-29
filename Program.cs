@@ -1076,9 +1076,16 @@ namespace MingusDingus8
                 }
                 else if (Memory.BusA == 127)
                 {
-                    Console.CursorLeft--;
-                    Console.Write(" ");
-                    Console.CursorLeft--;
+                    try
+                    {
+                        Console.CursorLeft--;
+                        Console.Write(" ");
+                        Console.CursorLeft--;
+                    }
+                    catch
+                    {
+                        // nothing
+                    }
                 }
                 else
                 {
@@ -1094,9 +1101,16 @@ namespace MingusDingus8
                 }
                 else if (Memory.BusB == 127)
                 {
-                    Console.CursorLeft--;
-                    Console.Write(" ");
-                    Console.CursorLeft--;
+                    try
+                    {
+                        Console.CursorLeft--;
+                        Console.Write(" ");
+                        Console.CursorLeft--;
+                    }
+                    catch
+                    {
+                        // nothing
+                    }
                 }
                 else
                 {
