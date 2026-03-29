@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MingusDingus8")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e8d4f68220a52b68e6aee622563c1ff3a0d7378a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3e8d68e179ca4a35f455580b4a5771bb4b18ff1f")]
 [assembly: System.Reflection.AssemblyProductAttribute("MingusDingus8")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MingusDingus8")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -49,7 +49,6 @@ namespace MingusDingus8
         static void Main(string[] args)
         {
             Console.WriteLine("MD8 Emulator Mar 2026 Release");
-            Console.WriteLine(Memory.BusA.ToString());
             Console.WriteLine("© 2026 winbamstudios");
             try
             {
@@ -989,7 +988,7 @@ namespace MingusDingus8
         }
         static void Hlt()
         {
-            Console.WriteLine("CPU halted.");
+            Console.WriteLine("\nCPU halted.");
             System.Environment.Exit(1);
         }
         static int Jmp(byte input1)
@@ -1071,60 +1070,12 @@ namespace MingusDingus8
             */
             if (input1 == 0)
             {
-                byte[] busArray = { Memory.BusA, 0 };
-                if (Memory.BusA == 13)
-                {
-                    Console.WriteLine();
-                }
-                else if (Memory.BusA == 127)
-                {
-                    try
-                    {
-                        Console.CursorLeft--;
-                        Console.Write(" ");
-                        Console.CursorLeft--;
-                    }
-                    catch
-                    {
-                        // do nothing!!!!!!!!!!!!
-                    }
-                }
-                else
-                {
-                    Console.Write(BitConverter.ToChar(busArray));
-                    Console.CursorLeft--;
-                    Console.Write(" ");
-                    Console.CursorLeft--;
-                }
+                Console.Write((char)Memory.BusA);
                 return 0;
             }
             else if (input1 == 1)
             {
-                byte[] busArray = { Memory.BusB, 0 };
-                if (Memory.BusB == 13)
-                {
-                    Console.WriteLine();
-                }
-                else if (Memory.BusB == 127)
-                {
-                    try
-                    {
-                        Console.CursorLeft--;
-                        Console.Write(" ");
-                        Console.CursorLeft--;
-                    }
-                    catch
-                    {
-                        // do nothing!!!!!!!!!!!!
-                    }
-                }
-                else
-                {
-                    Console.Write(BitConverter.ToChar(busArray));
-                    Console.CursorLeft--;
-                    Console.Write(" ");
-                    Console.CursorLeft--;
-                }
+                Console.Write((char)Memory.BusB);
                 return 0;
             }
             else if (input1 == 2)
